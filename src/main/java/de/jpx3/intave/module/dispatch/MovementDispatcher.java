@@ -161,6 +161,13 @@ public final class MovementDispatcher extends Module {
     if (location == null) {
       return null;
     }
+    boolean inLoadedChunk = VolatileBlockAccess.isInLoadedChunk(
+      location.getWorld(), location.getBlockX(), location.getBlockZ()
+    );
+    if (!inLoadedChunk) {
+      return location;
+    }
+
     MovementMetadata movement = user.meta().movement();
     int baseShifts = BASE_SHIFTS;
     Location fixedLocation = location.clone();
